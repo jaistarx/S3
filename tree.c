@@ -64,7 +64,7 @@ int max(node *root){
     if(root->rl==NULL)
         return root->data;
     else{
-        return max(root->rl);
+        max(root->rl);
     }
 }
 node * delete(node *root,int da){
@@ -111,14 +111,14 @@ int main(){
         root=insert(root,a);
     }
     else if(root==NULL)
-        printf("Tree is empty...");
+        printf("-->Tree is empty...");
     else if(ch==3){
     printf("Enter number : ");
     scanf("%d",&s);
     if(search(root,s)==0)
-        printf("Not found...\n");
+        printf("-->Not found...\n");
     else
-        printf("found...\n");
+        printf("-->Found...\n");
     }
     else if(ch==2){
         printf("\n1.Preorder\n2.Inorder\n3.Postorder\n");
@@ -137,7 +137,7 @@ int main(){
         }
     }
     else if(ch==5){
-        printf("%d",max(root));
+        printf("-->%d",max(root));
     }
     else if(ch==4){
         printf("Enter the element : ");
