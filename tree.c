@@ -61,29 +61,58 @@ void postorder(node *ptr){
     }    
 }
 int max(node *root){
-    if(root==NULL){
-        printf("Tree is empty...");
-        return -1;
-    }
+    if(root->rl==NULL)
+        return root->data;
     else{
-        if(root->rl==NULL)
-            return root->data;
-        else{
-            return max(root->rl);
-        }    
+        return max(root->rl);
     }
 }
+node * delete(node *root,int da){
+    int temp;
+    node *ptr;
+    if(da > root->data)
+        root->rl=delete(root->rl,da);
+    else if(da < root->data)
+        root->ll=delete(root->ll,da);
+    else{
+        if(root->ll==NULL && root->rl==NULL){
+            free(root);
+            return NULL;
+        }
+        else if(root->ll==NULL){
+            ptr=root->rl;
+            free(root);
+            return ptr;
+        }
+        else if(root->rl==NULL){
+            ptr=root->ll;
+            free(root);
+            return ptr;
+        }
+        else{
+            temp=max(root->ll);
+            root->ll=delete(root->ll,temp);
+            root->data=temp;
+        }
+    }
+    return root;
+}
 int main(){
-    int a,i,s,ch,order;
+    int a,i=1,s,ch,del,order;
     node *root=NULL,*p;
-    for(i=0;i<5;i++){
-    printf("Enter %d: ",i+1);
-    scanf("%d",&a);
-    root=insert(root,a);}
-    while(1){
-    printf("\n1.traversal\n2.search\n3.delete\n4.largest element\n");
+     while(1){
+    printf("\n1.Insertion\n2.traversal\n3.search\n4.deletion\n5.largest element\n");
     scanf("%d",&ch);
-    if(ch==2){
+    
+    if(ch==1){
+        printf("Enter the %d number : ",i);
+        i=i+1;
+        scanf("%d",&a);
+        root=insert(root,a);
+    }
+    else if(root==NULL)
+        printf("Tree is empty...");
+    else if(ch==3){
     printf("Enter number : ");
     scanf("%d",&s);
     if(search(root,s)==0)
@@ -91,7 +120,7 @@ int main(){
     else
         printf("found...\n");
     }
-    else if(ch==1){
+    else if(ch==2){
         printf("\n1.Preorder\n2.Inorder\n3.Postorder\n");
         scanf("%d",&order);
         if(order==1){
@@ -107,8 +136,13 @@ int main(){
             postorder(root);
         }
     }
-    else if(ch==4){
+    else if(ch==5){
         printf("%d",max(root));
+    }
+    else if(ch==4){
+        printf("Enter the element : ");
+        scanf("%d",&del);
+        root=delete(root,del);
     }
     }
 }
