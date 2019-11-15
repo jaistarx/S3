@@ -141,6 +141,7 @@ int main(){
     }
     else if(ch==4){
         printf("Enter the element : ");
+        i=i-1;
         scanf("%d",&del);
         root=delete(root,del);
     }
